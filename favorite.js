@@ -3,19 +3,23 @@ const INDEX_URL = BASE_URL + '/api/movies/'
 const POSTER_URL = BASE_URL + '/posters/'
 const movies = []
 const dataPanel = document.querySelector('#data-panel')
+const searchForm = document.querySelector('#search-form')
+const searchInput = document.querySelector('#search-input')
+let filteredMovies = []
 
+// 取得第3方資料
 axios
   .get(INDEX_URL)
-  .then(response => {
+  .then((response) => {
     movies.push(...response.data.results)
     renderMoviesList(movies)
   })
-  .catch(err => console.log(err))
+  .catch((err) => console.log(err))
 
-
+// 顯示電影清單
 function renderMoviesList(data) {
   let htmlContent = ''
-  data.forEach(item => {
+  data.forEach((item) => {
     htmlContent += `
               <div class="col-sm-3">
     <div class="mb-2">
@@ -47,22 +51,25 @@ function renderMoviesList(data) {
   dataPanel.innerHTML = htmlContent
 }
 
+// 顯示互動視窗
 function showMovieModel(id) {
   const modelTitle = document.querySelector('#movie-modal-title')
   const modelImg = document.querySelector('#movie-modal-image')
   const modelDate = document.querySelector('#movie-modal-date')
   const modelDescription = document.querySelector('#movie-modal-description')
-  axios.get(INDEX_URL + id).then(response => {
+
+  axios.get(INDEX_URL + id).then((response) => {
     const data = response.data.results
     modelTitle.textContent = data.title
     modelImg.innerHTML = `<img src="${POSTER_URL + data.image}" alt="movie-poster" class="img-fluid">`
     modelDate.textContent = `Release date: ${data.release_date}`
     modelDescription.textContent = data.description
-  }).catch(err => {
+  }).catch((err) =>
     console.log(err)
-  })
+  )
 }
 
+// 主畫面監聽器
 dataPanel.addEventListener('click', function onPanelClicked(e) {
   if (e.target.matches('.btn-show-movie')) {
     console.log(e.target)
@@ -71,3 +78,30 @@ dataPanel.addEventListener('click', function onPanelClicked(e) {
   }
 })
 
+// 收尋按鈕監聽器
+searchForm.addEventListener('submit', function onSearchFormSubmitted(event) {
+  // 取消預設事件
+  event.preventDefault()
+  console.log('add success')
+  // 取得搜尋關鍵字
+  const keyword = searchInput.value.trim().toLowerCase()
+  //條件篩選
+  // 方法1 for of loops 
+  // 使用 方法1 記得要clear filteredMovies，不然會累加
+  // for (const movie of movies) {
+  //   if (movie.title.toLowerCase().includes(keyword)) {
+  //     filteredMovies.push(movie)
+  //   }
+  // }
+  // 方法2 filter()
+  filteredMovies = movies.filter((movie) =>
+    movie.title.toLowerCase().includes(keyword)
+  )
+
+  //錯誤處理：無符合條件的結果
+  if (filteredMovies.length === 0) {
+    return alert(`您輸入的關鍵字：${keyword} 沒有符合條件的電影`)
+  }
+  //重新輸出至畫面
+  renderMoviesList(filteredMovies)
+})
