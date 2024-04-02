@@ -74,7 +74,7 @@ function addToFavorite(id) {
   const list = JSON.parse(localStorage.getItem('favoriteMovies')) || []
   const movie = movies.find((movie) => movie.id === id)
   if (list.some((movie) => movie.id === id)) {
-    alert('已收藏清單!')
+    return alert('已收藏清單!')
   }
   list.push(movie)
   localStorage.setItem('favoriteMovies', JSON.stringify(list))
