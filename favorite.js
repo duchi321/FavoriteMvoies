@@ -37,11 +37,11 @@ function renderMoviesList(data) {
             class="btn btn-primary btn-show-movie"
             data-bs-toggle="modal"
             data-bs-target="#movie-modal"
-            data-id=${item.id}
+            data-id="${item.id}"
           >
             More
           </button>
-          <button class="btn btn-success btn-add-favorite">+</button>
+          <button class="btn btn-success btn-add-favorite" data-id="${item.id}">+</button>
         </div>
       </div>
     </div>
@@ -69,12 +69,25 @@ function showMovieModel(id) {
   )
 }
 
+function addToFavorite(id) {
+  console.log(id)
+  const list = JSON.parse(localStorage.getItem('favoriteMovies')) || []
+  const movie = movies.find((movie) => movie.id === id)
+  if (list.some((movie) => movie.id === id)) {
+    alert('已收藏清單!')
+  }
+  list.push(movie)
+  localStorage.setItem('favoriteMovies', JSON.stringify(list))
+}
+
 // 主畫面監聽器
 dataPanel.addEventListener('click', function onPanelClicked(e) {
   if (e.target.matches('.btn-show-movie')) {
     console.log(e.target)
     console.log(e.target.dataset.id)
-    showMovieModel(e.target.dataset.id)
+    showMovieModel(Number(e.target.dataset.id))
+  } else if (e.target.matches('.btn-add-favorite')) {
+    addToFavorite(Number(e.target.dataset.id))
   }
 })
 
@@ -93,6 +106,7 @@ searchForm.addEventListener('submit', function onSearchFormSubmitted(event) {
   //     filteredMovies.push(movie)
   //   }
   // }
+
   // 方法2 filter()
   filteredMovies = movies.filter((movie) =>
     movie.title.toLowerCase().includes(keyword)
