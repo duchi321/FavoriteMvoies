@@ -136,3 +136,9 @@ searchForm.addEventListener('submit', function onSearchFormSubmitted(event) {
   //重新輸出至畫面
   renderMoviesList(filteredMovies)
 })
+
+paginator.addEventListener('click', function onPaginatorClicked(e) {
+  if (e.target.tagName !== 'A') return
+  const page = Number(e.target.dataset.page)
+  renderMoviesList(getMoviesByPage(page))
+})
