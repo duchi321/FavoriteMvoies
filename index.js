@@ -14,7 +14,7 @@ axios
   .get(INDEX_URL)
   .then((response) => {
     movies.push(...response.data.results)
-    renderMoviesList(getMoviesByPage(2))
+    renderMoviesList(getMoviesByPage(1))
     renderPaginator(movies.length)
   })
   .catch((err) => console.log(err))
@@ -64,8 +64,9 @@ function renderPaginator(amount) {
 }
 
 function getMoviesByPage(page) {
+  const data = filteredMovies.length ? filteredMovies : movies
   const starIndex = (page - 1) * MOVIES_PER_PAGE
-  return movies.slice(starIndex, starIndex + MOVIES_PER_PAGE)
+  return data.slice(starIndex, starIndex + MOVIES_PER_PAGE)
 }
 
 // 顯示互動視窗
@@ -134,7 +135,8 @@ searchForm.addEventListener('submit', function onSearchFormSubmitted(event) {
     return alert(`您輸入的關鍵字：${keyword} 沒有符合條件的電影`)
   }
   //重新輸出至畫面
-  renderMoviesList(filteredMovies)
+  renderPaginator(filteredMovies.length)
+  renderMoviesList(getMoviesByPage(1))
 })
 
 paginator.addEventListener('click', function onPaginatorClicked(e) {
