@@ -1,18 +1,21 @@
 const BASE_URL = 'https://webdev.alphacamp.io'
 const INDEX_URL = BASE_URL + '/api/movies/'
 const POSTER_URL = BASE_URL + '/posters/'
-const movies = []
 const dataPanel = document.querySelector('#data-panel')
 const searchForm = document.querySelector('#search-form')
 const searchInput = document.querySelector('#search-input')
+const paginator = document.querySelector('#paginator')
+const MOVIES_PER_PAGE = 12
 let filteredMovies = []
+const movies = []
 
 // 取得第3方資料
 axios
   .get(INDEX_URL)
   .then((response) => {
     movies.push(...response.data.results)
-    renderMoviesList(movies)
+    renderMoviesList(getMoviesByPage(2))
+    renderPaginator(movies.length)
   })
   .catch((err) => console.log(err))
 
@@ -49,6 +52,20 @@ function renderMoviesList(data) {
         `
   })
   dataPanel.innerHTML = htmlContent
+}
+
+function renderPaginator(amount) {
+  const numberOfPages = Math.ceil(amount / MOVIES_PER_PAGE)
+  let pageHtml = ''
+  for (let i = 1; i <= numberOfPages; i++) {
+    pageHtml += `<li class="page-item"><a class="page-link" href="#" data-page="${i}">${i}</a></li>`
+  }
+  paginator.innerHTML = pageHtml
+}
+
+function getMoviesByPage(page) {
+  const starIndex = (page - 1) * MOVIES_PER_PAGE
+  return movies.slice(starIndex, starIndex + MOVIES_PER_PAGE)
 }
 
 // 顯示互動視窗

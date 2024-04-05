@@ -4,6 +4,7 @@ const POSTER_URL = BASE_URL + '/posters/'
 const movies = JSON.parse(localStorage.getItem('favoriteMovies')) || [] //收藏清單
 const dataPanel = document.querySelector('#data-panel')
 
+
 function renderMovieList(data) {
   let rawHTML = ''
   data.forEach((item) => {
