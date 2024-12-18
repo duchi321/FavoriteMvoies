@@ -35,22 +35,29 @@
 
     <!-- Search Bar -->
     <div class="container mt-5">
-        <form class="row row-cols-lg-auto g-3 align-items-center mb-2" id="search-form">
-            <div class="col-12">
+        <form class="row g-3 align-items-center mb-3" id="search-form">
+            <!-- Search Input -->
+            <div class="col-7">
                 <label class="visually-hidden" for="search-input">
                     Search Keyword
                 </label>
                 <input type="text" class="form-control" id="search-input" placeholder="Keyword..." />
             </div>
-            <div class="col-12">
-                <button type="submit" class="btn btn-primary" id="search-submit-button">
+            <!-- Search Button -->
+            <div class="col-2">
+                <button type="submit" class="btn btn-primary px-4" id="search-submit-button">
                     Search
                 </button>
             </div>
+            <!-- Toggle Buttons -->
+            <div class="col-3 ms-auto text-end" id="change-mode">
+                <i class="fa fa-th me-2" id="card-mode-button" aria-hidden="true" aria-label="Card view"></i>
+                <i class="fa fa-bars" id="list-mode-button" aria-hidden="true" aria-label="List view"></i>
+            </div>
         </form>
-
-        <!-- Render Movie List -->
-        <div class="row" id="data-panel">
+       
+        <!-- add data-mode: card-mode / card-list -->
+        <div class="row" id="data-panel" data-mode="card-mode">
             <!-- renderMovies in here -->
         </div>
 
