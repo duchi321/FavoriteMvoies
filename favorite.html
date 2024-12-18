@@ -37,8 +37,14 @@
         </div>
     </nav>
 
-    <div class="container mt-5">
-        <div class="row" id="data-panel">
+    <div class="container mt-3">
+        <!-- Toggle Buttons -->
+        <div class="col-12 mb-4 d-flex justify-content-center" id="change-mode">
+            <i class="fa fa-th me-2" id="card-mode-button" aria-hidden="true" aria-label="Card view"></i>
+            <i class="fa fa-bars" id="list-mode-button" aria-hidden="true" aria-label="List view"></i>
+        </div>
+        <!-- add data-mode: card-mode / card-list -->
+        <div class="row" id="data-panel" data-mode="card-mode">
             <!-- Render Movie List -->
         </div>
     </div>
