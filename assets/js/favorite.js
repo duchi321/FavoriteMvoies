@@ -25,13 +25,16 @@ function renderMoviesList(data) {
       }
   })
   dataPanel.innerHTML = isCardMode ?
-  htmlContent : `<ul class="list-group col-sm-12 mb-2">${htmlContent}</ul>`
+  htmlContent : `
+  <div class="col-12">
+  <ul class="list-group">${htmlContent}</ul>
+  </div>`
 }
 
 function cardTemplate(data){
   return`
-    <div class="col-sm-3">
-      <div class="mb-2">
+    <div class="col-3">
+      <div class="mb-3">
         <div class="card">
           <img src="${POSTER_URL + data.image}" class="card-img-top" alt="Movie Poster"/>
           <div class="card-body">
@@ -43,7 +46,7 @@ function cardTemplate(data){
           </div>
         </div>
       </div>
-    </div>    
+    </div>
 `
 }
     
