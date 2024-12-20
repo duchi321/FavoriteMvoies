@@ -5,3 +5,8 @@
 body::-webkit-scrollbar {
     display: none;
 }
+
+.active {
+    background-color: #0d6efd;
+    color: white;
+}

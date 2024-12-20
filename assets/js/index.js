@@ -93,6 +93,8 @@ function renderPaginator(amount) {
     pageHtml += `<li class="page-item"><a class="page-link" href="#" data-page="${i}">${i}</a></li>`
   }
   paginator.innerHTML = pageHtml
+  const addAction = paginator.firstElementChild.firstElementChild
+  addAction.classList.add('active')
 }
 
 // 顯示電影畫面數量(12頁)
@@ -166,8 +168,13 @@ searchForm.addEventListener('submit', function onSearchFormSubmitted(event) {
 // 分頁監聽器
 paginator.addEventListener('click', function onPaginatorClicked(event) {
   if (event.target.tagName !== 'A') return
-  const page = Number(event.target.dataset.page)
-  renderMoviesList(getMoviesByPage(page))
+  const activePage = paginator.querySelector('.page-link.active')
+  let currentPage = Number(event.target.dataset.page)
+  if(currentPage){
+    activePage.classList.remove('active')
+  }
+  event.target.classList.add('active')
+  renderMoviesList(getMoviesByPage(currentPage))
 })
 
 // mode-change 監聽器
