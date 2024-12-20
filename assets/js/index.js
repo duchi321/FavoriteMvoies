@@ -148,7 +148,7 @@ searchForm.addEventListener('submit', function onSearchFormSubmitted(event) {
   const keyWord = searchInput.value.trim().toLowerCase()
   //錯誤處理：無符合條件的結果
   if (!keyWord) {
-    return alert('請輸入關鍵字！');
+    alert('請輸入關鍵字！');
   }
   
   filteredMovies = movies.filter((movie) =>
